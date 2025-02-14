@@ -1,0 +1,8 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+/Restaurants.API/appsettings.json
+/Restaurants.API/appsettings.Development.json
