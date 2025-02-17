@@ -4,7 +4,7 @@ using Restaurants.Application.Restaurants;
 namespace Restaurants.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/restaurants")]
 public class RestaurantsController(IRestaurantsService restaurantsService) : ControllerBase
 {
     // GET
@@ -14,6 +14,12 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
         var restaurants = await restaurantsService.GetAllRestaurantsAsync();
         return Ok(restaurants);
     }
-    
-    
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetRestaurantByIdAsync([FromRoute]int id)
+    {
+        var restaurants = await restaurantsService.GetRestaurantByIdAsync(id);
+        if(restaurants is null) return NotFound();
+        return Ok(restaurants);
+    }
 }
