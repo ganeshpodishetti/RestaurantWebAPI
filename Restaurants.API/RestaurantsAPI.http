@@ -1,6 +1,23 @@
-@Restaurants.API_HostAddress = http://localhost:5147
+@local_address = http://localhost:5147
 
-GET {{Restaurants.API_HostAddress}}/api/Restaurants
+GET {{local_address}}/api/Restaurants
 Accept: application/json
 
 ###
+POST {{local_address}}/api/restaurants
+Content-Type:  application/json
+
+{
+    "Name": "Persis",
+    "Description": "Authentic Indian Restaurant",
+    "Category": "Indian",
+    "Has Delivery": true,
+    "ContactNumber": "5726377353",
+    "ContactEmail": "persis@gmail.com",
+    "Street": "Delray",
+    "City": "Delray Beach",
+    "State": "FL",
+    "Country": "USA",
+    "ZipCode": "33484"
+    
+}
