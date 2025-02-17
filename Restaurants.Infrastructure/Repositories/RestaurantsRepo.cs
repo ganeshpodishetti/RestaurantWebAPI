@@ -12,4 +12,12 @@ internal class RestaurantsRepo(RestaurantsDbContext restaurantsDbContext) : IRes
         var restaurants = await restaurantsDbContext.Restaurants.ToListAsync();
         return restaurants;
     }
+
+    public async Task<Restaurant?> GetRestaurantByIdAsync(int id)
+    {
+        var restaurants = await restaurantsDbContext.Restaurants
+            .Include(r => r.Dishes)
+            .FirstOrDefaultAsync(x => x.Id == id);
+        return restaurants;
+    }
 }
