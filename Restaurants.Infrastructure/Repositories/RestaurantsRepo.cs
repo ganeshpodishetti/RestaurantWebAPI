@@ -28,9 +28,15 @@ internal class RestaurantsRepo(RestaurantsDbContext restaurantsDbContext) : IRes
         return restaurant.Id;
     }
 
-    public async Task Delete(Restaurant restaurant)
+    public async Task DeleteRestaurant(Restaurant restaurant)
     {
         restaurantsDbContext.Restaurants.Remove(restaurant);
+        await restaurantsDbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateRestaurant(Restaurant restaurant)
+    {
+        restaurantsDbContext.Restaurants.Update(restaurant);
         await restaurantsDbContext.SaveChangesAsync();
     }
 }
