@@ -15,7 +15,7 @@ public class DeleteRestaurantCommandQueryHandler(ILogger<DeleteRestaurantCommand
         logger.LogInformation($"Delete Restaurant: {request.Id}");
         var restaurant = await restaurantsRepo.GetRestaurantByIdAsync(request.Id);
         if (restaurant == null) return false;
-        await restaurantsRepo.Delete(restaurant);
+        await restaurantsRepo.DeleteRestaurant(restaurant);
         return true;
     }
 }
