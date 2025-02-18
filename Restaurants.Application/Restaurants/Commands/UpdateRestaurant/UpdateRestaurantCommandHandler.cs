@@ -11,7 +11,7 @@ public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommandHandl
 {
     public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Delete Restaurant: {request.Id}");
+        logger.LogInformation("Update Restaurant with Id: {Restaurant.Id} with {@UpdateRestaurantCommand}", request.Id, request);
         var restaurant = await restaurantsRepo.GetRestaurantByIdAsync(request.Id);
         if (restaurant == null) return false;
         
