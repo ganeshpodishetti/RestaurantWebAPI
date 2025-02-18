@@ -4,7 +4,7 @@
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "scalar/v1",
       "applicationUrl": "http://localhost:5147",
       "environmentVariables": {
@@ -14,7 +14,7 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "scalar/v1",
       "applicationUrl": "https://localhost:7120;http://localhost:5147",
       "environmentVariables": {

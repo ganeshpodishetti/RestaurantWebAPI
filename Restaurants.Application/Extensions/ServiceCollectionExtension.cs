@@ -19,5 +19,7 @@ public static class ServiceCollectionExtension
         
         // Fluent Validation
         services.AddValidatorsFromAssembly(applicationAssembly).AddFluentValidationAutoValidation();
+        
+        services.AddHttpContextAccessor();
     }
 }

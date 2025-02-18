@@ -17,4 +17,10 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Dishes\Commands\DeleteDish\" />
+      <Folder Include="Dishes\Commands\UpdateDish\" />
+      <Folder Include="Dishes\Queries\" />
+    </ItemGroup>
+
 </Project>

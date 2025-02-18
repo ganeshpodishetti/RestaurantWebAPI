@@ -19,24 +19,21 @@ internal class RestaurantsRepo(RestaurantsDbContext restaurantsDbContext) : IRes
             .Include(r => r.Dishes)
             .FirstOrDefaultAsync(x => x.Id == id);
         return restaurants;
-    }
+    }   
 
     public async Task<int> CreateRestaurantAsync(Restaurant restaurant)
     {
-        restaurantsDbContext.Restaurants.Add(restaurant);
+        restaurantsDbContext.Add(restaurant);
         await restaurantsDbContext.SaveChangesAsync();
         return restaurant.Id;
     }
 
     public async Task DeleteRestaurant(Restaurant restaurant)
     {
-        restaurantsDbContext.Restaurants.Remove(restaurant);
+        restaurantsDbContext.Remove(restaurant);
         await restaurantsDbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateRestaurant(Restaurant restaurant)
-    {
-        restaurantsDbContext.Restaurants.Update(restaurant);
-        await restaurantsDbContext.SaveChangesAsync();
-    }
+    public Task UpdateRestaurant() 
+        => restaurantsDbContext.SaveChangesAsync();
 }
