@@ -1,3 +1,10 @@
+# curl -X GET --location "http://localhost:5147/api/Restaurants" 
+#    -H "Accept: application/json"
+GET http://localhost:5147/api/Restaurants
+Accept: application/json
+
+###
+
 @local_address = http://localhost:5147
 
 GET {{local_address}}/api/Restaurants
@@ -8,16 +15,33 @@ POST {{local_address}}/api/restaurants
 Content-Type:  application/json
 
 {
-    "Name": "Persis",
+    "Name": "xxx",
     "Description": "Authentic Indian Restaurant",
     "Category": "Indian",
     "Has Delivery": true,
-    "ContactNumber": "5726377353",
-    "ContactEmail": "persis@gmail.com",
-    "Street": "Delray",
-    "City": "Delray Beach",
+    "ContactNumber": "1234567",
+    "ContactEmail": "x@com",
+    "Street": "Pompano",
+    "City": "Pompano Beach",
     "State": "FL",
     "Country": "USA",
-    "ZipCode": "33484"
+    "ZipCode": "33484-12"
     
 }
+
+###
+PATCH {{local_address}}/api/restaurants/1002
+Content-Type: application/json
+
+{
+  "Name": "Deccan",
+  "Description": "Pompano Indian"
+}
+
+###
+DELETE {{local_address}}/api/restaurants/1007
+Content-Type: application/json
+
+###
+POST {{local_address}}/api/restaurants/{{restaurantId}}/dishes
+Content-Type: application/json

@@ -23,7 +23,6 @@ public class RestaurantProfile : Profile
                     State = src.State,
                 }));
         
-        
         CreateMap<Restaurant, RestaurantDto>()
             .ForMember(dest => dest.City, opt =>
                 opt.MapFrom(src => src.Address == null ? null : src.Address.City))
@@ -34,6 +33,8 @@ public class RestaurantProfile : Profile
             .ForMember(dest => dest.Country, opt =>
                 opt.MapFrom(src => src.Address == null ? null : src.Address.Country))
             .ForMember(dest => dest.ZipCode, opt =>
-                opt.MapFrom(src => src.Address == null ? null : src.Address.ZipCode));
+                opt.MapFrom(src => src.Address == null ? null : src.Address.ZipCode))
+            .ForMember(dest => dest.Dishes, opt => 
+                opt.MapFrom(src => src.Dishes));
     }
 }
