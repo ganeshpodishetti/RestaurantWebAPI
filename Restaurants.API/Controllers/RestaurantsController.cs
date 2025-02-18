@@ -1,35 +1,44 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Dtos;
-using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
+using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
+using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
+using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 
 namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/restaurants")]
-public class RestaurantsController(IRestaurantsService restaurantsService) : ControllerBase
+public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     // GET
     [HttpGet]
     public async Task<IActionResult> GetAllRestaurantsAsync()
     {
-        var restaurants = await restaurantsService.GetAllRestaurantsAsync();
+        var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
         return Ok(restaurants);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetRestaurantByIdAsync([FromRoute]int id)
     {
-        var restaurants = await restaurantsService.GetRestaurantByIdAsync(id);
+        var restaurants = await mediator.Send(new GetRestaurantByIdQuery(id));
         if(restaurants is null) return NotFound();
         return Ok(restaurants);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRestaurantAsync([FromBody]CreateRestaurantDto request)
+    public async Task<IActionResult> CreateRestaurantAsync([FromBody]CreateRestaurantCommand request)
     {
-        var id = await restaurantsService.CreateRestaurantAsync(request);
+        var id = await mediator.Send(request);
         return CreatedAtAction(nameof(GetRestaurantByIdAsync), new { id }, null);
     }
 
-    
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteRestaurantByIdAsync([FromRoute] int id)
+    {
+        var isDeleted = await mediator.Send(new DeleteRestaurantCommandQuery(id));
+        if(isDeleted) return NoContent();   
+        return NotFound();
+    }
 }
