@@ -1,14 +1,16 @@
 using Restaurants.Application.Extensions;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -25,6 +27,16 @@ await seeder.SeedAsync();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    // Scalar API middleware config
+    app.MapScalarApiReference(options =>
+    {
+        options
+            .WithTitle("Restaurant API")
+            .WithTheme(ScalarTheme.DeepSpace)
+            .WithDarkMode(true)
+            .WithSidebar(true)
+            .WithLayout(layout: ScalarLayout.Modern);
+    });
 }
 
 app.UseHttpsRedirection();
