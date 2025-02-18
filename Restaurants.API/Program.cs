@@ -2,6 +2,7 @@ using Restaurants.Application.Extensions;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Scalar.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// Serilog
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+
 // app builder
 var app = builder.Build();
 
@@ -22,6 +27,9 @@ var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
 await seeder.SeedAsync();
+
+// Serilog middleware
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,7 +40,7 @@ if (app.Environment.IsDevelopment())
     {
         options
             .WithTitle("Restaurant API")
-            .WithTheme(ScalarTheme.DeepSpace)
+            .WithTheme(ScalarTheme.Mars)
             .WithDarkMode(true)
             .WithSidebar(true)
             .WithLayout(layout: ScalarLayout.Modern);

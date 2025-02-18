@@ -4,6 +4,5 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
-/Restaurants.API/appsettings.json
-/Restaurants.API/appsettings.Development.json
 Restaurants.sln.DotSettings.user
+/Restaurants.API/Logs
