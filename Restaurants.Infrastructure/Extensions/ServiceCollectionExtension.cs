@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +20,10 @@ public static class ServiceCollectionExtension
 
         // Registering the Identity Services
         services.AddIdentityApiEndpoints<User>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestaurantsDbContext>();
 
-        services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
+        services.AddScoped<ISeeder, Seeder>();
         services.AddScoped<IRestaurantsRepo, RestaurantsRepo>();
         services.AddScoped<IDishesRepo, DishesRepo>();
     }

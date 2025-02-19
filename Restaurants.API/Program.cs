@@ -19,7 +19,7 @@ var app = builder.Build();
 
 // creating scope for seeding data into tables if tables has no data.
 var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+var seeder = scope.ServiceProvider.GetRequiredService<ISeeder>();
 await seeder.SeedAsync();
 
 // Exception Handling Middleware
