@@ -30,6 +30,8 @@ public static class ServiceCollectionExtension
         services.AddScoped<IDishesRepo, DishesRepo>();
         
         // Claim based access control
-        
+        services.AddAuthorizationBuilder()
+            .AddPolicy(PolicyNames.HasNationality, policy => 
+                policy.RequireClaim(AppClaimTypes.Nationality, "Indian", "American"));
     }
 }
