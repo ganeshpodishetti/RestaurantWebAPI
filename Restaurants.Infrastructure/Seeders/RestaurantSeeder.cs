@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Context;
 
@@ -18,9 +20,20 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
             }
         }
     }
+
+    // private static IEnumerable<IdentityRole> GetIdentityRoles()
+    // {
+    //     var roles = new List<IdentityRole>
+    //     {
+    //         new (UserRoles.User),
+    //         new (UserRoles.Admin),
+    //         new (UserRoles.Owner)
+    //     };
+    //     return roles;
+    // }
     
     // Pre defined data for seed 
-    private IEnumerable<Restaurant> GetRestaurants()
+    private static IEnumerable<Restaurant> GetRestaurants()
     {
         var restaurant = new Restaurant();
         restaurant.Name = "KFC";
