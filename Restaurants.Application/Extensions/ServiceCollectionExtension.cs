@@ -1,7 +1,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using Restaurants.Application.Restaurants;
 using FluentValidation;
+using Restaurants.Application.Users;
 
 namespace Restaurants.Application.Extensions;
 
@@ -19,6 +19,9 @@ public static class ServiceCollectionExtension
         
         // Fluent Validation
         services.AddValidatorsFromAssembly(applicationAssembly).AddFluentValidationAutoValidation();
+        
+        // IUser Context
+        services.AddScoped<IUserContext, UserContext>();
         
         services.AddHttpContextAccessor();
     }
