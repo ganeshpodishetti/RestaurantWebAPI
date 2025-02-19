@@ -6,6 +6,7 @@ using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
+using Restaurants.Domain.Authorization;
 using Restaurants.Domain.Constants;
 
 namespace Restaurants.API.Controllers;
@@ -25,8 +26,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<IActionResult> GetRestaurantByIdAsync([FromRoute]int id)
     {
         var restaurants = await mediator.Send(new GetRestaurantByIdQuery(id));
