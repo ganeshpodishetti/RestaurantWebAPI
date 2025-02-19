@@ -18,9 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Dishes\Commands\DeleteDish\" />
       <Folder Include="Dishes\Commands\UpdateDish\" />
-      <Folder Include="Dishes\Queries\" />
     </ItemGroup>
 
 </Project>
