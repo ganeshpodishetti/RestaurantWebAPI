@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restaurants.Domain.Authorization;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Interfaces;
 using Restaurants.Infrastructure.Context;
@@ -21,10 +22,14 @@ public static class ServiceCollectionExtension
         // Registering the Identity Services
         services.AddIdentityApiEndpoints<User>()
             .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<RestaurantsUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantsDbContext>();
 
         services.AddScoped<ISeeder, Seeder>();
         services.AddScoped<IRestaurantsRepo, RestaurantsRepo>();
         services.AddScoped<IDishesRepo, DishesRepo>();
+        
+        // Claim based access control
+        
     }
 }
