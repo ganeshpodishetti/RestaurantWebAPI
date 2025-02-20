@@ -12,6 +12,32 @@ internal class RestaurantsRepo(RestaurantsDbContext restaurantsDbContext) : IRes
         var restaurants = await restaurantsDbContext.Restaurants.ToListAsync();
         return restaurants;
     }
+    
+    public async Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantsAsync(string? searchPhrase, int pageSize, int pageNumber)
+    {
+        var searchPhraseLower = searchPhrase?.ToLower();
+        
+        // var restaurants = await restaurantsDbContext.Restaurants
+        //     .Where(r => r.Name.ToLower().Contains(searchPhraseLower) 
+        //         || r.Description.ToLower().Contains(searchPhraseLower))
+        //     .ToListAsync();
+
+        //Checking directly on database
+        var baseQuery = restaurantsDbContext
+            .Restaurants
+            .Where(r => searchPhraseLower == null || (r.Name.ToLower().Contains(searchPhraseLower)
+                                                      || r.Description.ToLower().Contains(searchPhraseLower)));
+        
+        
+         var totalCount = await baseQuery.CountAsync();
+         
+         var restaurants = await baseQuery
+             .Skip(pageSize * (pageNumber -1))
+             .Take(pageSize)
+             .ToListAsync();
+        
+        return (restaurants, totalCount);
+    }
 
     public async Task<Restaurant?> GetRestaurantByIdAsync(int id)
     {
