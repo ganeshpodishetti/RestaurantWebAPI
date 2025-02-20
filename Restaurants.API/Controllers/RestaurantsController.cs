@@ -6,7 +6,7 @@ using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
-using Restaurants.Domain.Authorization;
+using Restaurants.Infrastructure.Authorization;
 using Restaurants.Domain.Constants;
 
 namespace Restaurants.API.Controllers;

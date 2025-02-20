@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Restaurants.Domain.Authorization;
+using Restaurants.Infrastructure.Authorization;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Interfaces;
+using Restaurants.Infrastructure.Authorization.Requirements;
 using Restaurants.Infrastructure.Context;
 using Restaurants.Infrastructure.Repositories;
 using Restaurants.Infrastructure.Seeders;
@@ -32,6 +34,12 @@ public static class ServiceCollectionExtension
         // Claim based access control
         services.AddAuthorizationBuilder()
             .AddPolicy(PolicyNames.HasNationality, policy => 
-                policy.RequireClaim(AppClaimTypes.Nationality, "Indian", "American"));
+                policy.RequireClaim(AppClaimTypes.Nationality, "Indian", "American"))
+            // custom authorization
+            .AddPolicy(PolicyNames.HasAtLeast20,
+                policy => policy.AddRequirements(new MinimumAgeRequirement(20)));
+        
+        // Authorization handler
+        services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
     }
 }

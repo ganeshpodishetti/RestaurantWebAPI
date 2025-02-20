@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Restaurants.Domain.Entities;
 
-namespace Restaurants.Domain.Authorization;
+namespace Restaurants.Infrastructure.Authorization;
 
 public class RestaurantsUserClaimsPrincipalFactory(UserManager<User> userManager,
     RoleManager<IdentityRole> roleManager,
