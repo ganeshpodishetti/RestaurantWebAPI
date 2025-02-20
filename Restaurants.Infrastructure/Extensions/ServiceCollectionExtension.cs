@@ -38,10 +38,13 @@ public static class ServiceCollectionExtension
                 policy.RequireClaim(AppClaimTypes.Nationality, "Indian", "American"))
             // custom authorization
             .AddPolicy(PolicyNames.HasAtLeast20,
-                policy => policy.AddRequirements(new MinimumAgeRequirement(20)));
+                policy => policy.AddRequirements(new MinimumAgeRequirement(20)))
+            .AddPolicy(PolicyNames.CreatedAtLeast2Restaurants,
+                policy => policy.AddRequirements(new CreatedMultipleRestaurantsRequirement(2)));
         
         // Authorization handler
         services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+        services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantsRequirementHandler>();
         
         // Custom Authorization
         services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
