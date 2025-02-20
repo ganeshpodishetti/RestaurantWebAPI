@@ -13,8 +13,13 @@ public class ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> lo
         catch (NotFoundException notFound)
         {
             context.Response.StatusCode = 404;
-            await context.Response.WriteAsync(notFound.Message );
+            await context.Response.WriteAsync(notFound.Message);
             logger.LogWarning(notFound.Message);
+        }
+        catch (ForbidException forbid)
+        {
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync("Access Denied.");
         }
         catch(Exception ex)
         {

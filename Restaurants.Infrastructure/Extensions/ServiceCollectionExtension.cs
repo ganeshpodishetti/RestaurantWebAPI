@@ -7,6 +7,7 @@ using Restaurants.Infrastructure.Authorization;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Interfaces;
 using Restaurants.Infrastructure.Authorization.Requirements;
+using Restaurants.Infrastructure.Authorization.Services;
 using Restaurants.Infrastructure.Context;
 using Restaurants.Infrastructure.Repositories;
 using Restaurants.Infrastructure.Seeders;
@@ -41,5 +42,8 @@ public static class ServiceCollectionExtension
         
         // Authorization handler
         services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+        
+        // Custom Authorization
+        services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
     }
 }
