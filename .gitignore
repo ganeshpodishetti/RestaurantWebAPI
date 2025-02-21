@@ -6,3 +6,4 @@ riderModule.iml
 .idea/
 Restaurants.sln.DotSettings.user
 /Restaurants.API/Logs
+/Restaurants.API/http-client.env.json
