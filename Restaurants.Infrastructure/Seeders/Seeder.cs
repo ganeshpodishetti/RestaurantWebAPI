@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Context;
@@ -10,6 +11,13 @@ internal class Seeder(RestaurantsDbContext dbContext) : ISeeder
     // seed data into database initially if table has no table.
     public async Task SeedAsync()
     {
+        // apply pending migrations
+        if (dbContext.Database.GetPendingMigrationsAsync().Result.Any())
+        {
+            await dbContext.Database.MigrateAsync();
+        }
+        
+        // check if database is connected
         if (await dbContext.Database.CanConnectAsync())
         {
             if (!dbContext.Restaurants.Any())
@@ -28,6 +36,7 @@ internal class Seeder(RestaurantsDbContext dbContext) : ISeeder
         }
     }
 
+    // Pre defined data for seed
     private static IEnumerable<IdentityRole> GetIdentityRoles()
     {
         var roles = new List<IdentityRole>
@@ -51,8 +60,13 @@ internal class Seeder(RestaurantsDbContext dbContext) : ISeeder
     // Pre defined data for seed 
     private static IEnumerable<Restaurant> GetRestaurants()
     {
+        User owner = new User
+        {
+            Email = "seed-user@test.com"
+        };
         var restaurant = new Restaurant
         {
+            Owner = owner,
             Name = "KFC",
             Category = "Fast Food",
             Description = "KFC (short for Kentucky Fried Chicken) is an American fast food restaurant chain headquartered in Louisville, Kentucky, that specializes in fried chicken.",
@@ -83,10 +97,12 @@ internal class Seeder(RestaurantsDbContext dbContext) : ISeeder
                 Country = "USA"
             }
         };
+        
         List<Restaurant> restaurants = [
             restaurant,
             new ()
             {
+                Owner = owner,
                 Name = "McDonald",
                 Category = "Fast Food",
                 Description =
