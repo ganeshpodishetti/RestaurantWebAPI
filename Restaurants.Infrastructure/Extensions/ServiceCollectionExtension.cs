@@ -48,5 +48,9 @@ public static class ServiceCollectionExtension
         
         // Custom Authorization
         services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
+        
+        // Blob Storage
+        // services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
+        // services.AddScoped<IBlobStorageService, BlobStorageService>();
     }
 }

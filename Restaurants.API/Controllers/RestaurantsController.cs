@@ -60,4 +60,20 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         await mediator.Send(request);
         return NoContent();
     }
+    
+    // [HttpPost("{id}/logo")]
+    // public async Task<IActionResult> UploadLogo([FromRoute]int id, IFormFile file)
+    // {
+    //     await using var stream = file.OpenReadStream();
+    //
+    //     var command = new UploadRestaurantLogoCommand()
+    //     {
+    //         RestaurantId = id,
+    //         FileName = $"{id}-{file.FileName}",
+    //         File = stream
+    //     };
+    //
+    //     await mediator.Send(command);
+    //     return NoContent();
+    // }
 }
