@@ -59,8 +59,8 @@ try
     
     app.UseWatchDog(opt =>
     {
-        opt.WatchPageUsername = builder.Configuration["WatchDog:Username"];
-        opt.WatchPagePassword = builder.Configuration["WatchDog:Password"];
+        opt.WatchPageUsername = "admin";
+        opt.WatchPagePassword = "Watch@2025";
     });
     
     // Configure the HTTP request pipeline.
