@@ -6,6 +6,8 @@ using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Scalar.AspNetCore;
 using Serilog;
+using WatchDog;
+using WatchDog.src.Enums;
 
 try
 {
@@ -15,6 +17,24 @@ try
     builder.AddPresentation();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
+    
+    // var connectionString = builder.Configuration.GetValue<string>("WatchDog:mongoDbConnection");
+    // var mongoUrl = MongoUrl.Create(connectionString);
+    // var mongoClient = new MongoClient(mongoUrl);
+    // builder.Services.AddSingleton<IMongoClient>(new MongoClient(mongoClient.Settings));
+    
+    // Add WatchDog services
+    builder.Services.AddWatchDogServices(options =>
+        {
+            options.IsAutoClear = true;
+            options.ClearTimeSchedule = WatchDogAutoClearScheduleEnum.Daily;
+            //options.SetExternalDbConnString = builder.Configuration.GetConnectionString("WatchDog:mongoDbConnection");
+            //options.DbDriverOption = WatchDogDbDriverEnum.Mongo;
+        }
+    );
+    
+    // Add WatchDog logger
+    builder.Logging.AddWatchDogLogger();
 
     // app builder
     var app = builder.Build();
@@ -36,7 +56,13 @@ try
 
     // Serilog middleware
     app.UseSerilogRequestLogging();
-
+    
+    app.UseWatchDog(opt =>
+    {
+        opt.WatchPageUsername = builder.Configuration["WatchDog:Username"];
+        opt.WatchPagePassword = builder.Configuration["WatchDog:Password"];
+    });
+    
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
@@ -63,7 +89,9 @@ try
                 };
         });
     }
-
+    
+    app.UseWatchDogExceptionLogger();
+    
     app.UseHttpsRedirection();
 
     app.UseRouting();
